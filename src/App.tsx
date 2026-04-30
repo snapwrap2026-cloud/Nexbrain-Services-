@@ -3,21 +3,28 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import React, { Suspense, memo } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { motion } from "motion/react";
 import { ShoppingCart, Utensils, CreditCard, ShieldCheck, ShoppingBag } from "lucide-react";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
-import { Services } from "./components/Services";
-import { Process } from "./components/Process";
-import { DemoSection } from "./components/DemoSection";
-import { CaseStudies } from "./components/CaseStudies";
-import { Testimonials } from "./components/Testimonials";
-import { CTASection } from "./components/CTASection";
-import { Footer } from "./components/Footer";
-import { Background3D } from "./components/Background3D";
-import { Team } from "./components/Team";
 
-const TrustStrip = () => {
+// Lazy load heavy or below-the-fold components
+const Services = React.lazy(() => import("./components/Services").then(m => ({ default: m.Services })));
+const Process = React.lazy(() => import("./components/Process").then(m => ({ default: m.Process })));
+const DemoSection = React.lazy(() => import("./components/DemoSection").then(m => ({ default: m.DemoSection })));
+const CaseStudies = React.lazy(() => import("./components/CaseStudies").then(m => ({ default: m.CaseStudies })));
+const Testimonials = React.lazy(() => import("./components/Testimonials").then(m => ({ default: m.Testimonials })));
+const CTASection = React.lazy(() => import("./components/CTASection").then(m => ({ default: m.CTASection })));
+const Footer = React.lazy(() => import("./components/Footer").then(m => ({ default: m.Footer })));
+const Background3D = React.lazy(() => import("./components/Background3D").then(m => ({ default: m.Background3D })));
+const Team = React.lazy(() => import("./components/Team").then(m => ({ default: m.Team })));
+
+const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard").then(m => ({ default: m.AdminDashboard })));
+const Vlogs = React.lazy(() => import("./pages/Vlogs").then(m => ({ default: m.Vlogs })));
+
+const TrustStrip = memo(() => {
   const logos = [
     { name: "Zepto", icon: ShoppingCart },
     { name: "Zomato", icon: Utensils },
@@ -89,31 +96,26 @@ const TrustStrip = () => {
       </div>
     </div>
   );
-};
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AdminDashboard } from "./pages/AdminDashboard";
-import { Vlogs } from "./pages/Vlogs";
+});
 
 function LandingPage() {
   return (
     <>
-      {/* 3D Background */}
-      <Background3D />
-
       <Navbar />
-
       <Hero />
-      <TrustStrip />
-      <Testimonials />
-      <Services />
-      <DemoSection />
-      <Process />
-      <CaseStudies />
-      <Team />
-      <CTASection />
-
-      <Footer />
+      <Suspense fallback={<div className="h-20" />}>
+        <TrustStrip />
+        <Testimonials />
+        <Services />
+        <DemoSection />
+        <Process />
+        <CaseStudies />
+        <Team />
+        <CTASection />
+        <Footer />
+        {/* 3D Background */}
+        <Background3D />
+      </Suspense>
     </>
   );
 }
@@ -122,11 +124,13 @@ export default function App() {
   return (
     <Router>
       <main className="relative min-h-screen bg-transparent">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/vlogs" element={<Vlogs />} />
-        </Routes>
+        <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-4 border-white/20 border-t-white rounded-full animate-spin" /></div>}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/vlogs" element={<Vlogs />} />
+          </Routes>
+        </Suspense>
       </main>
     </Router>
   );

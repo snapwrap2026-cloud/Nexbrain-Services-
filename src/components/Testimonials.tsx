@@ -7,7 +7,7 @@ const testimonials = [
     name: "Priya Sharma",
     role: "CTO",
     company: "ZeptoPay",
-    video: "/videos/test1.mp4",
+    video: "https://cdn.coverr.co/videos/coverr-server-room-4023/1080p.mp4",
     fallback: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80",
     text: "Next Brain completely transformed our payment infrastructure. We managed to scale 10x within months without any downtime.",
   },
@@ -15,7 +15,7 @@ const testimonials = [
     name: "Rahul Verma",
     role: "Founder",
     company: "EduTech India",
-    video: "/videos/test2.mp4",
+    video: "https://cdn.coverr.co/videos/coverr-typing-on-a-laptop-5232/1080p.mp4",
     fallback: "https://images.unsplash.com/photo-1627988350176-5991461cc427?auto=format&fit=crop&w=600&q=80",
     text: "The AI automation systems they built for our coaching platform are game-changing. Our student engagement grew rapidly.",
   },
@@ -23,7 +23,7 @@ const testimonials = [
     name: "Ananya Desai",
     role: "Head of Growth",
     company: "Swasthya Health",
-    video: "/videos/test3.mp4",
+    video: "https://cdn.coverr.co/videos/coverr-futuristic-abstract-3151/1080p.mp4",
     fallback: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
     text: "Their strategic systems are incredibly precise. We saw a 300% ROI on our patient acquisition campaigns in the first quarter.",
   },
@@ -31,7 +31,7 @@ const testimonials = [
     name: "Vikram Singh",
     role: "CEO",
     company: "Bharat Logistics",
-    video: "/videos/test4.mp4",
+    video: "https://cdn.coverr.co/videos/coverr-someone-working-on-a-computer-1422/1080p.mp4",
     fallback: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=600&q=80",
     text: "Supply chain visibility was a nightmare until we partnered with them. Now, we have an autonomous routing network that saves thousands daily.",
   },
@@ -39,7 +39,7 @@ const testimonials = [
     name: "Neha Gupta",
     role: "CMO",
     company: "UrbanCart",
-    video: "/videos/test5.mp4",
+    video: "https://cdn.coverr.co/videos/coverr-modern-skyscraper-7744/1080p.mp4",
     fallback: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80",
     text: "The personalized marketing flows completely revolutionized our D2C brand. Customer retention shot up by 40% almost instantly.",
   },
@@ -47,7 +47,7 @@ const testimonials = [
     name: "Arjun Patel",
     role: "Director",
     company: "DataMind",
-    video: "/videos/test6.mp4",
+    video: "https://cdn.coverr.co/videos/coverr-data-center-2940/1080p.mp4",
     fallback: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=600&q=80",
     text: "Data-driven decision making is finally a reality for us. The automated dashboards they built are simply brilliant.",
   },
@@ -61,8 +61,34 @@ const TestimonialCard = ({
   item: (typeof testimonials)[0];
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            videoRef.current?.play().catch(() => {});
+            setIsPlaying(true);
+          } else {
+            videoRef.current?.pause();
+            setIsPlaying(false);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const togglePlay = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -85,7 +111,7 @@ const TestimonialCard = ({
   };
 
   return (
-    <div className="relative rounded-[24px] overflow-hidden group w-[300px] h-[533px] shrink-0 border border-white/10 shadow-2xl bg-[#111116]">
+    <div ref={containerRef} className="relative rounded-[24px] overflow-hidden group w-[300px] h-[533px] shrink-0 border border-white/10 shadow-2xl bg-[#111116]">
       {/* Fallback Image or Video Container */}
       <div className="absolute inset-0 w-full h-full bg-black">
         <video 
@@ -93,8 +119,8 @@ const TestimonialCard = ({
           src={item.video} 
           poster={item.fallback}
           className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-          autoPlay 
-          muted 
+          muted={isMuted}
+          preload="none"
           loop 
           playsInline
         />

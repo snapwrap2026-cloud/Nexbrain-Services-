@@ -1,13 +1,15 @@
 import { motion } from "motion/react";
 import React from "react";
 import { Linkedin, Twitter, Github, Instagram, Facebook, ArrowRight } from "lucide-react";
+import kumarRajnishImg from "../assets/kumar_rajnish.jpg";
+import karanSinghImg from "../assets/karan_singh.jpg";
 
 const teamMembers = [
   {
     name: "Kumar Rajnish",
     role: "Website Designer & Automation Maker",
     bio: "Passionate about creating seamless websites and automating workflows. Transforming complex processes into efficient, automated systems for optimal performance.",
-    image: "/kumar_rajnish.jpg", // Please upload your image as kumar_rajnish.jpg in the public folder using the file explorer
+    image: kumarRajnishImg,
     social: {
       instagram: "https://www.instagram.com/_rajjnish?igsh=ZnU1NnVuZGV1cHpq",
       facebook: "https://www.facebook.com/profile.php?id=61573882330656&mibextid=ZbWKwL",
@@ -17,7 +19,7 @@ const teamMembers = [
     name: "Karan Singh",
     role: "Graphic Designer & Social Media Specialist",
     bio: "Creative graphic designer and social media strategist. Crafting compelling visual narratives and engaging social campaigns that resonate with digital audiences.",
-    image: "/karan_singh.jpg", // Please upload your image as karan_singh.jpg in the public folder using the file explorer
+    image: karanSinghImg,
     social: {
       instagram: "https://www.instagram.com/snap_karan?igsh=MWN6NzdkamdwaWNqNQ==",
       facebook: "https://www.facebook.com/share/1BooUiWgmA/",
@@ -71,7 +73,8 @@ export const Team = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
                   <img 
                     src={member.image} 
-                    alt={member.name} 
+                    alt={member.name}
+                    loading="lazy"
                     className="w-full h-full object-cover filter grayscale-[60%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                   />
                   

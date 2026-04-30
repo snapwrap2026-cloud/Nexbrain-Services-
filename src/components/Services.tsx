@@ -1,44 +1,89 @@
 import { motion, useScroll, useTransform } from "motion/react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Bot, Share2, Users, Monitor, TrendingUp } from "lucide-react";
+
+import s1 from "../assets/videos/service-1.mp4";
+import s2 from "../assets/videos/service-2.mp4";
+import s3 from "../assets/videos/service-3.mp4";
+import s4 from "../assets/videos/service-4.mp4";
+import s5 from "../assets/videos/service-5.mp4";
 
 const services = [
   {
     id: "01",
     title: "AI Automations",
     description: "Systems that handle leads, workflows, and operations automatically.",
-    video: "/videos/service-1.mp4",
+    video: s1,
     icon: Bot,
   },
   {
     id: "02",
     title: "Social Media Management",
     description: "Data-driven content strategies that turn followers into brand advocates using AI.",
-    video: "/videos/service-2.mp4",
+    video: s2,
     icon: Share2,
   },
   {
     id: "03",
     title: "Influencer Marketing",
     description: "Connecting your brand with the right voices for explosive growth.",
-    video: "/videos/service-3.mp4",
+    video: s3,
     icon: Users,
   },
   {
     id: "04",
     title: "Website Development",
     description: "High-converting, performance-optimized digital engines tailored for scale.",
-    video: "/videos/service-4.mp4",
+    video: s4,
     icon: Monitor,
   },
   {
     id: "05",
     title: "Brand Growth Systems",
     description: "Comprehensive scaling strategies designed for modern dominance.",
-    video: "/videos/service-5.mp4",
+    video: s5,
     icon: TrendingUp,
   },
 ];
+
+const ServiceVideo = ({ src }: { src: string }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            videoRef.current?.play().catch(() => {});
+          } else {
+            videoRef.current?.pause();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <video 
+      ref={videoRef}
+      src={src} 
+      loop 
+      muted 
+      preload="none"
+      playsInline
+      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+    />
+  );
+};
 
 export const Services = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -131,14 +176,7 @@ export const Services = () => {
                       
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-[#5B8CFF]/10 transition-opacity duration-700 z-10" />
-                      <video 
-                        src={service.video} 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline
-                        className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                      />
+                      <ServiceVideo src={service.video} />
                     </div>
                   </motion.div>
 
