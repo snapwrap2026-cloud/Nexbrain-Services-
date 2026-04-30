@@ -9,6 +9,7 @@ import { motion } from "motion/react";
 import { ShoppingCart, Utensils, CreditCard, ShieldCheck, ShoppingBag } from "lucide-react";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
+import { CustomCursor } from "./components/ui/CustomCursor";
 
 import { Background3D } from "./components/Background3D";
 
@@ -16,6 +17,7 @@ import { Background3D } from "./components/Background3D";
 const Services = React.lazy(() => import("./components/Services").then(m => ({ default: m.Services })));
 const Process = React.lazy(() => import("./components/Process").then(m => ({ default: m.Process })));
 const DemoSection = React.lazy(() => import("./components/DemoSection").then(m => ({ default: m.DemoSection })));
+const SplineSceneBasic = React.lazy(() => import("./components/ui/demo").then(m => ({ default: m.SplineSceneBasic })));
 const CaseStudies = React.lazy(() => import("./components/CaseStudies").then(m => ({ default: m.CaseStudies })));
 const Testimonials = React.lazy(() => import("./components/Testimonials").then(m => ({ default: m.Testimonials })));
 const CTASection = React.lazy(() => import("./components/CTASection").then(m => ({ default: m.CTASection })));
@@ -110,6 +112,7 @@ function LandingPage() {
         <TrustStrip />
         <Testimonials />
         <Services />
+        <SplineSceneBasic />
         <DemoSection />
         <Process />
         <CaseStudies />
@@ -124,6 +127,7 @@ function LandingPage() {
 export default function App() {
   return (
     <Router>
+      <CustomCursor />
       <main className="relative min-h-screen bg-transparent">
         <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-4 border-white/20 border-t-white rounded-full animate-spin" /></div>}>
           <Routes>

@@ -70,10 +70,10 @@ export const Hero = () => {
                 size="lg"
                 className="w-full sm:w-auto px-8 backdrop-blur-lg bg-white/95 text-black hover:bg-white transition-colors duration-300 shadow-[0_0_40px_rgba(255,255,255,0.2)]"
                 onClick={() => {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  window.open('https://calendly.com/info-rajnishh/30min', '_blank');
                 }}
               >
-                Start your project
+                Book a meeting
               </Button>
               <Button
                 variant="outline"

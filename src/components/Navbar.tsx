@@ -54,13 +54,20 @@ export const Navbar = () => {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b",
         isScrolled
-          ? "bg-brand-black/60 backdrop-blur-xl border-white/5 h-[72px] flex items-center"
+          ? "bg-white/[0.02] backdrop-blur-[24px] border-white/10 h-[72px] flex items-center shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
           : "bg-transparent border-transparent h-[72px] flex items-center",
       )}
     >
-      <div className="container-custom w-full flex items-center justify-between">
+      {isScrolled && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent mix-blend-overlay" />
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
+      )}
+      <div className="container-custom w-full flex items-center justify-between relative z-10">
         <Link
           to="/"
           className="flex items-center gap-2 group scale-75 origin-left"
@@ -110,14 +117,10 @@ export const Navbar = () => {
               variant="primary"
               size="sm"
               onClick={() => {
-                if (location.pathname !== '/') {
-                  window.location.href = '/#contact';
-                } else {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                }
+                window.open('https://calendly.com/info-rajnishh/30min', '_blank');
               }}
             >
-              Work with us
+              Book a meeting
             </Button>
           </div>
         </div>
@@ -187,14 +190,10 @@ export const Navbar = () => {
               className="w-full"
               onClick={() => {
                 setIsMobileMenuOpen(false);
-                if (location.pathname !== '/') {
-                  window.location.href = '/#contact';
-                } else {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                }
+                window.open('https://calendly.com/info-rajnishh/30min', '_blank');
               }}
             >
-              Work with us
+              Book a meeting
             </Button>
           </motion.div>
         )}
