@@ -47,34 +47,8 @@ const services = [
 ];
 
 const ServiceVideo = ({ src }: { src: string }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            videoRef.current?.play().catch(() => {});
-          } else {
-            videoRef.current?.pause();
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   return (
     <video 
-      ref={videoRef}
       src={src} 
       loop 
       muted 
