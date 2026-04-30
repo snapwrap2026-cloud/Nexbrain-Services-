@@ -2,32 +2,37 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 
 export const Background3D = () => {
-  return (
-    <div className="fixed inset-0 z-[-1] bg-[#050508] w-full h-full overflow-hidden">
-      {/* Grid Pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.15]" 
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px',
-          maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)'
-        }}
-      />
+  const containerRef = useRef<HTMLDivElement>(null);
 
-      {/* Floating orbs for a 3D-like depth effect */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
-        className="absolute inset-0 z-0"
-      >
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#5B8CFF]/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#A855F7]/10 blur-[120px]" />
-        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-[#5B8CFF]/5 blur-[100px]" />
-      </motion.div>
+  useEffect(() => {
+    // Attempt to hide the watermark logo from the shadow DOM
+    const interval = setInterval(() => {
+      if (containerRef.current) {
+        const viewer = containerRef.current.querySelector('spline-viewer');
+        if (viewer && viewer.shadowRoot) {
+          const logo = viewer.shadowRoot.querySelector('#logo');
+          if (logo) {
+            (logo as HTMLElement).style.display = 'none';
+            clearInterval(interval);
+          }
+        }
+      }
+    }, 500);
+
+    const timeout = setTimeout(() => clearInterval(interval), 10000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="fixed inset-0 z-[-1] bg-brand-black w-full h-full overflow-hidden">
+      <div className="absolute inset-x-0 top-0 bottom-[-80px]">
+        {/* @ts-ignore */}
+        <spline-viewer loading-anim-type="spinner-small-dark" url="https://prod.spline.design/HJ1Aj0sqpI75tgmF/scene.splinecode"></spline-viewer>
+      </div>
     </div>
   );
 };

@@ -10,6 +10,8 @@ import { ShoppingCart, Utensils, CreditCard, ShieldCheck, ShoppingBag } from "lu
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 
+import { Background3D } from "./components/Background3D";
+
 // Lazy load heavy or below-the-fold components
 const Services = React.lazy(() => import("./components/Services").then(m => ({ default: m.Services })));
 const Process = React.lazy(() => import("./components/Process").then(m => ({ default: m.Process })));
@@ -18,7 +20,6 @@ const CaseStudies = React.lazy(() => import("./components/CaseStudies").then(m =
 const Testimonials = React.lazy(() => import("./components/Testimonials").then(m => ({ default: m.Testimonials })));
 const CTASection = React.lazy(() => import("./components/CTASection").then(m => ({ default: m.CTASection })));
 const Footer = React.lazy(() => import("./components/Footer").then(m => ({ default: m.Footer })));
-const Background3D = React.lazy(() => import("./components/Background3D").then(m => ({ default: m.Background3D })));
 const Team = React.lazy(() => import("./components/Team").then(m => ({ default: m.Team })));
 
 const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard").then(m => ({ default: m.AdminDashboard })));
@@ -101,6 +102,8 @@ const TrustStrip = memo(() => {
 function LandingPage() {
   return (
     <>
+      {/* 3D Background */}
+      <Background3D />
       <Navbar />
       <Hero />
       <Suspense fallback={<div className="h-20" />}>
@@ -113,8 +116,6 @@ function LandingPage() {
         <Team />
         <CTASection />
         <Footer />
-        {/* 3D Background */}
-        <Background3D />
       </Suspense>
     </>
   );

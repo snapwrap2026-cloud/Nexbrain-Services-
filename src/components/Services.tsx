@@ -2,46 +2,40 @@ import { motion, useScroll, useTransform } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
 import { Bot, Share2, Users, Monitor, TrendingUp } from "lucide-react";
 
-import s1 from "../assets/videos/service-1.mp4";
-import s2 from "../assets/videos/service-2.mp4";
-import s3 from "../assets/videos/service-3.mp4";
-import s4 from "../assets/videos/service-4.mp4";
-import s5 from "../assets/videos/service-5.mp4";
-
 const services = [
   {
     id: "01",
     title: "AI Automations",
     description: "Systems that handle leads, workflows, and operations automatically.",
-    video: s1,
+    video: "/videos/service-1.mp4",
     icon: Bot,
   },
   {
     id: "02",
     title: "Social Media Management",
     description: "Data-driven content strategies that turn followers into brand advocates using AI.",
-    video: s2,
+    video: "/videos/service-2.mp4",
     icon: Share2,
   },
   {
     id: "03",
     title: "Influencer Marketing",
     description: "Connecting your brand with the right voices for explosive growth.",
-    video: s3,
+    video: "/videos/service-3.mp4",
     icon: Users,
   },
   {
     id: "04",
     title: "Website Development",
     description: "High-converting, performance-optimized digital engines tailored for scale.",
-    video: s4,
+    video: "/videos/service-4.mp4",
     icon: Monitor,
   },
   {
     id: "05",
     title: "Brand Growth Systems",
     description: "Comprehensive scaling strategies designed for modern dominance.",
-    video: s5,
+    video: "/videos/service-5.mp4",
     icon: TrendingUp,
   },
 ];
