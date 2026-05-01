@@ -1,12 +1,16 @@
 import { motion } from "motion/react";
 import React from "react";
 import { Linkedin, Twitter, Github, Instagram, Facebook, ArrowRight } from "lucide-react";
+
+import kumarRajnishImg from "../assets/kumar_rajnish.jpg";
+import karanSinghImg from "../assets/karan_singh.jpg";
+
 const teamMembers = [
   {
     name: "Kumar Rajnish",
     role: "Website Designer & Automation Maker",
     bio: "Passionate about creating seamless websites and automating workflows. Transforming complex processes into efficient, automated systems for optimal performance.",
-    image: "/images/kumar_rajnish.jpg",
+    image: kumarRajnishImg,
     social: {
       instagram: "https://www.instagram.com/_rajjnish?igsh=ZnU1NnVuZGV1cHpq",
       facebook: "https://www.facebook.com/profile.php?id=61573882330656&mibextid=ZbWKwL",
@@ -16,7 +20,7 @@ const teamMembers = [
     name: "Karan Singh",
     role: "Graphic Designer & Social Media Specialist",
     bio: "Creative graphic designer and social media strategist. Crafting compelling visual narratives and engaging social campaigns that resonate with digital audiences.",
-    image: "/images/karan_singh.jpg",
+    image: karanSinghImg,
     social: {
       instagram: "https://www.instagram.com/snap_karan?igsh=MWN6NzdkamdwaWNqNQ==",
       facebook: "https://www.facebook.com/share/1BooUiWgmA/",
